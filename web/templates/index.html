@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Smart Plant</title>
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+      integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+      crossorigin="anonymous"
+    ></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <section class="content">
+      <header>Basil Moisture Readings</header>
+      <canvas id="moisture_readings" width="400" height="400"></canvas>
+    </section>
+
+    <section class="content">
+      <header>Water Status</header>
+      <ul class="collection">
+        <li class="collection-header"><h4>Last 10 Water Status</h4></li>
+        {% for item in water_statuses %}
+        <li class="collection-item">At {{item.timestamp}} for {{item.duration}} seconds</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <script>
+      var ctx = document.getElementById("moisture_readings").getContext("2d");
+      var moisture_readings = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: [{% for item in moisture_readings %}
+                      "",
+                    {% endfor %}],
+          datasets: [
+            {
+              label: "Moisture Analog Value\n Dry-1024 Wet-0",
+              data: [{% for item in moisture_readings %}
+                      {{item.value}},
+                    {% endfor %}],
+              backgroundColor: [
+                "rgba(255, 99, 132, 0.2)",
+              ],
+              borderColor: [
+                "rgba(75, 192, 192, 1)",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
