@@ -43,7 +43,7 @@ def initialize_mqtt():
 def initialize_mongodb():
     MONGO_CONNECTION_STRING = os.environ['MONGO_CONNECTION_STRING']
     mongodb = Database(MONGO_CONNECTION_STRING)
-    return mongodb
+    return mongodb 
 
 
 @app.route('/')
