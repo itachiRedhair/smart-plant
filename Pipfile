@@ -17,8 +17,9 @@ toml = "==0.10.2"
 Flask = "==1.1.2"
 MarkupSafe = "==1.1.1"
 Werkzeug = "==1.0.1"
+gunicorn = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.7"
+python_version = "3.8.2"
