@@ -1,1 +1,1 @@
-web: gunicorn --pythonpath web.app:app
+web: cd web && python app.py
